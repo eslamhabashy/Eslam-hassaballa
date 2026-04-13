@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .auth-panel {
+            display: block;
+        }
+
+        .project-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .project-list-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .image-preview {
+            max-width: 250px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .gallery-item .remove-img {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #fa5252;
+            transform: translateY(-2px);
+        }
+
+        #authError {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        #formError {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="logo">EH_<span>Admin</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">View Site</a></li>
+                <li><a href="#" id="logoutBtn" style="display:none; color: var(--primary);">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Auth Panel -->
+        <div id="authPanel" class="auth-panel card glass">
+            <h2>Admin Login</h2>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Sign in to edit your portfolio projects and upload
+                pictures.</p>
+            <div id="authError"></div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" class="form-control" placeholder="admin@portfolio.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••">
+            </div>
+            <button id="loginBtn" class="btn btn-primary" style="width: 100%;">Login to Dashboard</button>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="admin-panel">
+            <!-- Profile Settings -->
+            <div id="profileSettings" class="card glass" style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Profile & Branding</h2>
+                    <button id="saveProfileBtn" class="btn btn-primary"
+                        style="padding: 10px 20px; font-size: 0.9rem;">Save Changes</button>
+                </div>
+
+                <div class="edit-grid" style="grid-template-columns: 1fr 2fr;">
+                    <div style="text-align: center;">
+                        <label>Avatar Preview</label>
+                        <div class="nav-profile"
+                            style="width: 120px; height: 120px; margin: 20px auto; pointer-events: none;">
+                            <img id="profilePreviewImg" src="assets/robot.png" alt="Preview" class="profile-img"
+                                style="object-position: center 50%;">
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-muted);">Adjust the slider to center your face</p>
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            <label>Profile Photo</label>
+                            <input type="file" id="profileFile" accept="image/*" class="form-control"
+                                style="background: transparent; border: none; padding: 0;">
+                            <input type="hidden" id="profileUrl">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Vertical Alignment (Center Face)</label>
+                            <input type="range" id="profilePos" min="0" max="100" value="50" class="form-control"
+                                style="padding: 0; background: transparent;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 5px;">
+                                <span>Top</span>
+                                <span>Center</span>
+                                <span>Bottom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="profileError" style="margin-top: 15px; font-size: 14px;"></div>
+            </div>
+
+            <div id="projectList" class="card glass" style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Your Projects</h2>
+                    <button id="addNewBtn" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">+ Add
+                        New Project</button>
+                </div>
+                <div id="projectsContainer">Loading database...</div>
+            </div>
+
+            <!-- Edit Form -->
+            <div id="editForm" class="card glass" style="display: none;">
+                <h2 id="formTitle">Edit Project</h2>
+                <div id="formError"></div>
+                <input type="hidden" id="projectId">
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="pTitle" class="form-control" placeholder="e.g. My Awesome Robot">
+                </div>
+                <div class="form-group">
+                    <label>URL Slug (Automatically generated)</label>
+                    <input type="text" id="pSlug" class="form-control" placeholder="my-awesome-robot">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="pDesc" class="form-control"
+                        placeholder="Write your full project description here..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tags (Comma separated)</label>
+                    <input type="text" id="pTags" class="form-control" placeholder="Robotics, Embedded, Circuit Design">
+                </div>
+
+                <div class="form-group"
+                    style="padding: 15px; border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px;">
+                    <label>Upload New Core Picture (Thumbnail)</label>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Select a cool picture to
+                        represent your project. It will be uploaded automatically.</p>
+                    <input type="file" id="pThumbnailFile" accept="image/*" class="form-control"
+                        style="background: transparent; border: none; padding: 0;">
+
+                    <label style="margin-top: 15px;">Or Keep Direct URL / Existing Path</label>
+                    <input type="text" id="pThumbnailUrl" class="form-control" placeholder="assets/robot.png">
+                    <br>
+                    <img id="thumbnailPreview" class="image-preview" src="" style="display:none;" alt="Preview">
+                </div>
+
+                <div class="form-group">
+                    <label>YouTube Embed Link (Optional Video)</label>
+                    <input type="text" id="pEmbed" class="form-control" placeholder="https://www.youtube.com/embed/...">
+                </div>
+
+                <div class="form-group"
+                    style="padding: 15px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                    <label>Gallery Images (Additional Photos)</label>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Select multiple images to
+                        add to the project gallery. You'll see previews below before saving.</p>
+                    <input type="file" id="pGalleryFiles" accept="image/*" multiple class="form-control"
+                        style="background: transparent; border: none; padding: 0;">
+
+                    <div id="newGalleryPreviews" class="gallery-container"
+                        style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; display: none;">
+                        <!-- New file previews will appear here -->
+                    </div>
+
+                    <div id="galleryList" class="gallery-container">
+                        <!-- Existing gallery images will appear here -->
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button id="saveBtn" class="btn btn-primary">Save to Database</button>
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js?v=2"></script>
+</body>
+
+</html>

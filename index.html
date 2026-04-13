@@ -1,22 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eslam Hassaballa | Aerospace & AI Engineering Portfolio</title>
-    <meta name="description" content="Portfolio of Eslam Hassaballa, AI Engineering of Autonomous Systems Master's student focusing on UAVs, robotics, and flight testing.">
+    <meta name="description"
+        content="Portfolio of Eslam Hassaballa, AI Engineering of Autonomous Systems Master's student focusing on UAVs, robotics, and flight testing.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=3">
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">EH_<span>Aero</span></a>
+            <div class="nav-profile-container" id="profileToggle">
+                <a href="#" class="nav-profile">
+                    <img src="assets/profile.jpg" alt="Eslam Hassaballa" class="profile-img">
+                </a>
+                
+                <!-- Profile Popup -->
+                <div id="profilePopup" class="profile-popup glass">
+                    <div class="popup-header">
+                        <div class="popup-avatar">
+                            <img src="assets/profile.jpg" alt="Avatar" class="profile-img">
+                        </div>
+                        <div class="popup-title">
+                            <h4 id="popName">Eslam Hassaballa</h4>
+                            <p id="popRole">Aerospace & AI Engineer</p>
+                        </div>
+                    </div>
+                    <div class="popup-body">
+                        <p id="popBio">Master student in AI Engineering of Autonomous Systems.</p>
+                        <div class="popup-socials">
+                            <a href="#" target="_blank">LinkedIn</a>
+                            <a href="#" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -38,7 +71,8 @@
             <p class="subtitle">&lt; / AI & Autonomous Systems Engineer &gt;</p>
             <h1 class="glitch-text">Eslam Hassaballa</h1>
             <p class="description">
-                Bridging the gap between software intelligence and mechanical reality. Specializing in UAV flight testing, autonomous robotics, and advanced manufacturing.
+                Bridging the gap between software intelligence and mechanical reality. Specializing in UAV flight
+                testing, autonomous robotics, and advanced manufacturing.
             </p>
             <div class="hero-cta">
                 <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -54,8 +88,13 @@
             <div class="about-grid">
                 <div class="about-text card glass">
                     <h3>Who am I?</h3>
-                    <p>I am a Master’s student in AI Engineering of Autonomous Systems with a Bachelor’s degree in Electronics Engineering. My expertise is grounded in strong hands-on experience building drones, autonomous robots, and full mechanical systems.</p>
-                    <p>I am deeply passionate about UAVs, flight testing, and real-world engineering, possessing practical skills spanning electronics, embedded systems, and mechanical fabrication. Whether it's spot welding, configuring a Pixhawk, or designing control logic, I thrive at the bleeding edge of robotics.</p>
+                    <p>I am a Master’s student in AI Engineering of Autonomous Systems with a Bachelor’s degree in
+                        Electronics Engineering. My expertise is grounded in strong hands-on experience building drones,
+                        autonomous robots, and full mechanical systems.</p>
+                    <p>I am deeply passionate about UAVs, flight testing, and real-world engineering, possessing
+                        practical skills spanning electronics, embedded systems, and mechanical fabrication. Whether
+                        it's spot welding, configuring a Pixhawk, or designing control logic, I thrive at the bleeding
+                        edge of robotics.</p>
                 </div>
                 <div class="education-timeline card glass">
                     <h3>Academic Background</h3>
@@ -80,55 +119,8 @@
     <section class="projects" id="projects">
         <div class="container">
             <h2 class="section-title animate-on-scroll fade-up">Featured <span>Projects</span></h2>
-            <div class="project-grid">
-                <!-- Project 1 -->
-                <div class="project-card animate-on-scroll slide-up clickable-project" style="--delay: 1" data-project="drone">
-                    <div class="project-img">
-                        <img src="assets/drone.png" alt="Custom Drone Development">
-                        <div class="project-overlay">
-                            <span>ArduPilot</span>
-                            <span>Pixhawk</span>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Drone Development</h3>
-                        <p>Designed and built small-scale drones using brushless motors, ESCs, and Raspberry Pi. Performed assembly, soldering, system-level debugging, and initial flight testing using ArduPilot and Pixhawk.</p>
-                        <span class="read-more">View Details &rarr;</span>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="project-card animate-on-scroll slide-up clickable-project" style="--delay: 2" data-project="robot">
-                    <div class="project-img">
-                        <img src="assets/robot.png" alt="Autonomous Ground Robot">
-                        <div class="project-overlay">
-                            <span>Sensors</span>
-                            <span>Navigation</span>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Autonomous Mobile Robot</h3>
-                        <p>Bachelor thesis project involving the design and implementation of an autonomous ground robot. Developed control logic, integrated sensors for navigation, and worked extensively with real-time embedded systems.</p>
-                        <span class="read-more">View Details &rarr;</span>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card animate-on-scroll slide-up clickable-project" style="--delay: 3" data-project="cyclekart">
-                    <div class="project-img">
-                        <img src="assets/cyclekart.png" alt="Hybrid Cyclekart">
-                        <div class="project-overlay">
-                            <span>Fabrication</span>
-                            <span>Welding</span>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Hybrid Cyclekart</h3>
-                        <p>Designed and built a full-scale 2-seater vehicle from scratch. Developed and welded the custom chassis frame, implemented the steering system, and integrated drivetrain components.</p>
-                        <span class="read-more">View Details &rarr;</span>
-                    </div>
-                </div>
-
+            <div class="project-grid" id="projectGrid">
+                <!-- Projects will be dynamically injected here by script.js -->
             </div>
         </div>
     </section>
@@ -138,7 +130,7 @@
         <div class="container animate-on-scroll fade-up">
             <h2 class="section-title">Technical <span>Expertise</span></h2>
             <div class="skills-container">
-                
+
                 <div class="skill-category card glass">
                     <div class="skill-icon">✈️</div>
                     <h3>Flight & Robotics</h3>
@@ -194,8 +186,9 @@
         <div class="container animate-on-scroll fade-up">
             <div class="contact-card card glass">
                 <h2 class="section-title" style="margin-bottom: 2rem;">Ready to <span>Launch?</span></h2>
-                <p>Highly motivated to bring my passion for aviation and flight testing to Maple Aviation. Let's build the future of aerospace together.</p>
-                
+                <p>Highly motivated to bring my passion for aviation and flight testing to Maple Aviation. Let's build
+                    the future of aerospace together.</p>
+
                 <div class="contact-info">
                     <div class="contact-item">
                         <span class="label">Location</span>
@@ -203,14 +196,14 @@
                     </div>
                     <div class="contact-item">
                         <span class="label">Email</span>
-                        <span class="value"><a href="mailto:eslam@example.com">eslam@example.com</a></span>
+                        <span class="value"><a href="mailto:esh7460@thi.de">esh7460@thi.de</a></span>
                     </div>
                     <div class="contact-item">
                         <span class="label">Phone</span>
-                        <span class="value">+49 123 456 7890</span>
+                        <span class="value">+49 1529 2622972</span>
                     </div>
                 </div>
-                
+
                 <div class="languages">
                     <span><strong>Languages:</strong> English (Fluent) • Arabic (Native) • German (B1)</span>
                 </div>
@@ -239,6 +232,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=3"></script>
 </body>
+
 </html>
