@@ -735,7 +735,34 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
+    :root {
+        --navbar-height: 80px;
+    }
+
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .navbar {
+        padding: 1.2rem 0; /* Scaled down for mobile */
+    }
+
+    .navbar.scrolled {
+        padding: 0.8rem 0;
+    }
+
+    .nav-profile {
+        width: 50px; /* Scaled down from 76px */
+        height: 50px;
+    }
+
     .nav-links {
         display: none;
         flex-direction: column;
@@ -743,10 +770,12 @@ footer {
         top: 100%;
         left: 0;
         width: 100%;
-        background: var(--bg-color);
+        background: rgba(5, 5, 8, 0.95);
+        backdrop-filter: blur(15px);
         padding: 2rem;
         text-align: center;
         border-bottom: 1px solid var(--glass-border);
+        gap: 2rem;
     }
 
     .nav-links.active {
@@ -761,12 +790,80 @@ footer {
         font-size: 3rem;
     }
 
+    .hero .description {
+        font-size: 1.1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
     .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .project-grid {
         grid-template-columns: 1fr;
     }
 
     .contact-info {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 2rem;
+    }
+
+    .contact-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    /* Profile Popup on Mobile */
+    .profile-popup {
+        position: fixed;
+        bottom: 20px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        width: 90vw;
+        max-width: 320px;
+    }
+
+    .nav-profile-container.active .profile-popup {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    /* Modal on Mobile */
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+        max-height: 85vh;
+    }
+
+    .modal-carousel {
+        height: 250px;
+    }
+
+    .modal-body h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
     }
 }
