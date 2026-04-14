@@ -75,14 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             container.innerHTML = '';
-            data.forEach(p => {
+            data.forEach((p, index) => {
                 const el = document.createElement('div');
                 el.className = 'project-list-item';
                 el.innerHTML = `
                     <div style="display:flex; align-items:center; gap:15px;">
+                        <div class="reorder-controls">
+                            <button class="move-btn" onclick="moveProject('${p.id}', -1)" ${index === 0 ? 'disabled' : ''}>▲</button>
+                            <button class="move-btn" onclick="moveProject('${p.id}', 1)" ${index === data.length - 1 ? 'disabled' : ''}>▼</button>
+                        </div>
                         <img src="${p.thumbnail || 'assets/robot.png'}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
                         <div>
-                            <strong style="font-size:1.2rem; display:block;">${p.title}</strong>
+                            <strong style="font-size:1.1rem; display:block;">${p.title}</strong>
                             <span style="font-size:0.8rem; color:var(--text-muted);">${p.slug}</span>
                         </div>
                     </div>
@@ -112,6 +116,36 @@ document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = `<span style="color:#ff6b6b;">Database Error: ${err.message}</span>`;
         }
     }
+    
+    // ── Reordering Logic ──
+    window.moveProject = async (id, direction) => {
+        const index = projectsData.findIndex(p => p.id === id);
+        if (index === -1) return;
+        
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= projectsData.length) return;
+        
+        const currentProject = projectsData[index];
+        const targetProject = projectsData[targetIndex];
+        
+        // Swap order_index
+        const currentIndex = currentProject.order_index;
+        const targetOrderIndex = targetProject.order_index;
+        
+        try {
+            // Update both in database
+            const { error: error1 } = await sb.from('projects').update({ order_index: targetOrderIndex }).eq('id', currentProject.id);
+            if (error1) throw error1;
+            
+            const { error: error2 } = await sb.from('projects').update({ order_index: currentIndex }).eq('id', targetProject.id);
+            if (error2) throw error2;
+            
+            loadProjects(); // Refresh UI
+        } catch (err) {
+            console.error('Error reordering:', err);
+            alert('Failed to reorder projects: ' + err.message);
+        }
+    };
 
     // ── Delete ──
     async function deleteProject(id) {
